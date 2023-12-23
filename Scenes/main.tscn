@@ -1,7 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxiwerq47hatg"]
+[gd_scene load_steps=5 format=3 uid="uid://bxiwerq47hatg"]
 
-[ext_resource type="PackedScene" uid="uid://0hi0hkb7e0il" path="res://Scenes/player.tscn" id="1_k54r8"]
+[ext_resource type="PackedScene" uid="uid://8upexyc62g7k" path="res://Scenes/level.tscn" id="2_so5rb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n8iqy"]
+sky_top_color = Color(0.172549, 0.435294, 0.819608, 1)
+sky_horizon_color = Color(0.729412, 0.627451, 0.627451, 1)
+ground_bottom_color = Color(0.137255, 0.192157, 0.129412, 1)
+ground_horizon_color = Color(0.662745, 0.658824, 0.596078, 1)
+
+[sub_resource type="Sky" id="Sky_eqgpb"]
+sky_material = SubResource("ProceduralSkyMaterial_n8iqy")
+
+[sub_resource type="Environment" id="Environment_5udsk"]
+background_mode = 2
+sky = SubResource("Sky_eqgpb")
 
 [node name="Main" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_k54r8")]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5udsk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.801911, 0.597443, 0, -0.597443, 0.801911, 0, 1.94279, 3.35376)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1, 4, 5)
+projection = 1
+size = 13.0
+
+[node name="Level" parent="." instance=ExtResource("2_so5rb")]

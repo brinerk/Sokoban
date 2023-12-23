@@ -1,13 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://0hi0hkb7e0il"]
 
+[ext_resource type="Script" path="res://Scenes/player.cs" id="1_tp6nj"]
+
 [sub_resource type="SphereMesh" id="SphereMesh_a7kk2"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_cgxe3"]
-
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("1_tp6nj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_a7kk2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_cgxe3")
