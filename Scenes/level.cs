@@ -18,11 +18,22 @@ public partial class level : Node3D
 			for (int j = 0; j < LevelOne.GetLength(1); j++)
 			{
 				int s = LevelOne[i, j];
-				if(s == 1)
+				switch(s)
 				{
-					var Floor = ResourceLoader.Load<PackedScene>("res://Scenes/floor.tscn").Instantiate<Node3D>();
-					AddChild(Floor);
-					Floor.Position = new Vector3(j,0,i);
+					case 1:
+						{
+							var Floor = ResourceLoader.Load<PackedScene>("res://Scenes/floor.tscn").Instantiate<Node3D>();
+							AddChild(Floor);
+							Floor.Position = new Vector3(j,0,i);
+							break;
+						}
+					case 2:
+						{
+							var Goal = ResourceLoader.Load<PackedScene>("res://Scenes/goal.tscn").Instantiate<Node3D>();
+							AddChild(Goal);
+							Goal.Position = new Vector3(j,0,i);
+							break;
+						}
 				}
 			}
 		}
