@@ -7,13 +7,21 @@ public static class DefinedGlobals
 	
 	//Define level
 	// 0 is empty. 1 is floor.
-	public static readonly int[,] LevelOne = { {1,0,0,1,0,0,0},
+	public static int[,] LevelOne = { {1,0,0,1,0,0,0},
 					    		     {0,1,1,1,1,1,1},
 								  	 {0,1,1,1,0,1,1},
 								     {0,1,1,1,0,1,1},
-								     {0,1,1,1,0,1,0},
+								     {0,1,1,1,1,1,0},
 								     {0,1,1,1,0,1,0},
 								     {1,0,0,1,1,1,0} };
+
+	public static int[,] EntitiesGen = { {0,0,0,0,0,0,0},
+					    		     {0,0,0,0,0,0,0},
+								  	 {0,0,0,0,0,0,0},
+								     {0,0,1,0,0,0,0},
+								     {0,0,0,2,0,0,0},
+								     {0,0,0,0,0,0,0},
+								     {0,0,0,0,0,0,0} };
 }
 
 public partial class globals : Node3D

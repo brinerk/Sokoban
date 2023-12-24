@@ -33,10 +33,45 @@ public partial class player : Node3D
 			}
 			else
 			{
-				NewPos = ActualPosition - new Vector3(1,0,0);
-				ActualPosition = ActualPosition - new Vector3(1,0,0);
+				var CheckEnt = EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X];
+				switch(CheckEnt)
+				{
+					case 0:
+					{
+						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+						NewPos = ActualPosition - new Vector3(1,0,0);
+						ActualPosition = ActualPosition - new Vector3(1,0,0);
+
+						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+						break;
+					}
+					case 1:
+					{
+						break;
+					}
+					case 2:
+					{
+
+						if(LevelOne[(int)PotentialGridPos.Z,(int)PotentialGridPos.X-1] == 1)
+						{
+							EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
+							EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X-1] = 2;
+
+							NewPos = ActualPosition - new Vector3(1,0,0);
+							ActualPosition = ActualPosition - new Vector3(1,0,0);
+						}
+						else
+						{
+							EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 2;
+						}
+						break;
+					}
+				}
 			}
 		}
+		
+
 		if (Input.IsActionJustPressed("ui_right")) 
 		{
 			_t = 0.0f;
@@ -48,10 +83,19 @@ public partial class player : Node3D
 			}
 			else
 			{
-				NewPos = ActualPosition + new Vector3(1,0,0);
-				ActualPosition = ActualPosition + new Vector3(1,0,0);
+				if(EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] == 0)
+				{
+
+					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+					NewPos = ActualPosition + new Vector3(1,0,0);
+					ActualPosition = ActualPosition + new Vector3(1,0,0);
+
+					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+				}
 			}
 		}
+
 		if (Input.IsActionJustPressed("ui_up")) 
 		{
 			_t = 0.0f;
@@ -63,8 +107,17 @@ public partial class player : Node3D
 			}
 			else
 			{
-				NewPos = ActualPosition - new Vector3(0,0,1);
-				ActualPosition = ActualPosition - new Vector3(0,0,1);
+				//Don't walk into entities
+				if(EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] == 0)
+				{
+
+					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+					NewPos = ActualPosition - new Vector3(0,0,1);
+					ActualPosition = ActualPosition - new Vector3(0,0,1);
+
+					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+				}
 			}
 		}
 		if (Input.IsActionJustPressed("ui_down")) 
@@ -78,8 +131,17 @@ public partial class player : Node3D
 			}
 			else
 			{
-				NewPos = ActualPosition + new Vector3(0,0,1);
-				ActualPosition = ActualPosition + new Vector3(0,0,1);
+				//Don't walk into entities
+				if(EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] == 0)
+				{
+
+					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+					NewPos = ActualPosition + new Vector3(0,0,1);
+					ActualPosition = ActualPosition + new Vector3(0,0,1);
+
+					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+				}
 			}
 		}
 
