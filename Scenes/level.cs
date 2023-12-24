@@ -44,7 +44,8 @@ public partial class level : Node3D
 			for (int j = 0; j < EntitiesGen.GetLength(1); j++)
 			{
 				int s = EntitiesGen[i, j];
-				switch(s){
+				switch(s)
+				{
 					case 1:
 					{
 						var player = ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate<Node3D>();

@@ -90,6 +90,11 @@ public partial class player : Node3D
 						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
 						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 2;
 
+						if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 2)
+						{
+							GD.Print("you win");
+						}
+
 						NewPos = ActualPosition + dir;
 						ActualPosition = ActualPosition + dir;
 
