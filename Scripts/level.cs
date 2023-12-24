@@ -55,8 +55,17 @@ public partial class level : Node3D
 					}
 					case 2:
 					{
-						var BoxInstance = Box.Instantiate<Node3D>();
+						var BoxInstance = Box.Instantiate<box>();
 						BoxInstance.Position = new Vector3(j,0.25f,i);
+						BoxInstance.ID = 2;
+						AddChild(BoxInstance);
+						break;
+					}
+					case 3:
+					{
+						var BoxInstance = Box.Instantiate<box>();
+						BoxInstance.Position = new Vector3(j,0.25f,i);
+						BoxInstance.ID = 3;
 						AddChild(BoxInstance);
 						break;
 					}

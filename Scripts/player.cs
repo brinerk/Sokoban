@@ -30,20 +30,20 @@ public partial class player : Node3D
 
 		_t += (float)delta * 2.0f;
 
-		if (Input.IsActionJustPressed("ui_left")) 
+		if (Input.IsActionJustPressed("left")) 
 		{
 			CheckMovement(Left);
 		}
 
-		if (Input.IsActionJustPressed("ui_right")) 
+		if (Input.IsActionJustPressed("right")) 
 		{
 			CheckMovement(Right);
 		}
-		if (Input.IsActionJustPressed("ui_down")) 
+		if (Input.IsActionJustPressed("down")) 
 		{
 			CheckMovement(Down);
 		}
-		if (Input.IsActionJustPressed("ui_up")) 
+		if (Input.IsActionJustPressed("up")) 
 		{
 			CheckMovement(Up);
 		}
@@ -83,7 +83,7 @@ public partial class player : Node3D
 				case 2:
 				{
 
-					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 )
+					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 1 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
 					{
 						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
 
@@ -91,6 +91,31 @@ public partial class player : Node3D
 						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 2;
 
 						if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 2)
+						{
+							GD.Print("you win");
+						}
+
+						NewPos = ActualPosition + dir;
+						ActualPosition = ActualPosition + dir;
+
+						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 1;
+					}
+					else
+					{
+						ActualPosition = ActualPosition;
+					}
+					break;
+				}
+				case 3:
+				{
+					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 1 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
+					{
+						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
+						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 3;
+
+						if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 3)
 						{
 							GD.Print("you win");
 						}

@@ -7,9 +7,9 @@ public static class DefinedGlobals
 	
 	//Define level
 	// 0 is empty. 1 is floor. 2 is goal.
-	public static int[,] LevelOne = {{1,0,0,2,0,0,0},
-					    		     {0,1,1,1,1,1,1},
-								  	 {0,1,1,1,0,1,1},
+	public static int[,] LevelOne = {{1,1,0,2,0,0,0},
+					    		     {1,1,1,1,1,1,1},
+								  	 {1,1,1,1,0,1,1},
 								     {0,1,1,1,0,1,1},
 								     {0,1,1,1,1,1,0},
 								     {0,1,1,1,0,1,0},
@@ -17,7 +17,7 @@ public static class DefinedGlobals
 
 	public static int[,] EntitiesGen = { {0,0,0,0,0,0,0},
 					    		     	 {0,0,0,0,0,0,0},
-								  	 	 {0,0,0,0,0,0,0},
+								  	 	 {0,0,0,0,0,3,0},
 								     	 {0,0,1,0,0,0,0},
 								     	 {0,0,0,2,0,0,0},
 								     	 {0,0,0,0,0,0,0},

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bxiwerq47hatg"]
 
-[ext_resource type="Script" path="res://Scenes/globals.cs" id="1_ruxcq"]
+[ext_resource type="Script" path="res://Scripts/globals.cs" id="1_ruxcq"]
 [ext_resource type="PackedScene" uid="uid://8upexyc62g7k" path="res://Scenes/level.tscn" id="2_so5rb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n8iqy"]

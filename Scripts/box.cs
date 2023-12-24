@@ -4,10 +4,10 @@ using static DefinedGlobals;
 
 public partial class box: Node3D
 {
-
 	private float _t = 0.0f;
 	private Vector3 NewPos;
 	private Vector3 AcPos;
+	public int ID {get; set;}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -25,7 +25,7 @@ public partial class box: Node3D
 		{
 			for(int j = 0; j < EntitiesGen.GetLength(1); j++)
 			{
-				if (EntitiesGen[i,j] == 2)
+				if (EntitiesGen[i,j] == ID)
 				{
 					NewPos = new Vector3(j,0.25f,i);
 				}
