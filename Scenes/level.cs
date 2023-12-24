@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using static DefinedGlobals;
 
 public partial class level : Node3D
 {
@@ -7,41 +8,28 @@ public partial class level : Node3D
 	public override void _Ready()
 	{
 
-		// LEVEL EDITOR
-		
-		// FLOOR TILES
-		// 0 is blank, 1 is a floor 
-		int[,] LevelGen = { {1,0,0,1,0,0,0}, 
-							{0,1,1,1,1,0,0}, 
-							{0,1,1,1,0,0,0}, 
-							{1,0,0,1,0,0,0} };
-
 		// ENTITIES
 		// 0 is blank, 1 is player
 		int[,] EntitiesGen = { {0,0,0,0},
-							   {0,1,0,0},
 							   {0,0,0,0},
+							   {1,0,1,0},
 							   {0,0,0,0} };
 
-
-		// LEVEL EDITOR COMPLETE
 
 		// LEVEL GENERATION
 		// THIS SHOULD BE A FUNCTION
 		// i is COLUMN, j is ROW
-		for (int i = 0; i < LevelGen.GetLength(0); i++)
+		for (int i = 0; i < LevelOne.GetLength(0); i++)
 		{
-			for (int j = 0; j < LevelGen.GetLength(1); j++)
+			for (int j = 0; j < LevelOne.GetLength(1); j++)
 			{
-				int s = LevelGen[i, j];
+				int s = LevelOne[i, j];
 				if(s == 1)
 				{
 					var Floor = ResourceLoader.Load<PackedScene>("res://Scenes/floor.tscn").Instantiate<Node3D>();
 					AddChild(Floor);
-					GD.Print(Floor.Position);
-					Floor.Position = new Vector3(j,0,i);
+				Floor.Position = new Vector3(j,0,i);
 				}
-				GD.Print(s);
 			}
 		}
 		
@@ -55,11 +43,9 @@ public partial class level : Node3D
 				if(s == 1)
 				{
 					var player = ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate<Node3D>();
-					AddChild(player);
-					GD.Print(player.Position);
 					player.Position = new Vector3(j,0.5f,i);
+					AddChild(player);
 				}
-				GD.Print(s);
 			}
 		}
 	}

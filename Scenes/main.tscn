@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxiwerq47hatg"]
+[gd_scene load_steps=8 format=3 uid="uid://bxiwerq47hatg"]
 
+[ext_resource type="Script" path="res://Scenes/globals.cs" id="1_ruxcq"]
 [ext_resource type="PackedScene" uid="uid://8upexyc62g7k" path="res://Scenes/level.tscn" id="2_so5rb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n8iqy"]
@@ -15,17 +16,34 @@ sky_material = SubResource("ProceduralSkyMaterial_n8iqy")
 background_mode = 2
 sky = SubResource("Sky_eqgpb")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2r8c"]
+albedo_color = Color(0.286275, 0.643137, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l3sr3"]
+material = SubResource("StandardMaterial3D_i2r8c")
+size = Vector2(100, 100)
+
 [node name="Main" type="Node3D"]
+script = ExtResource("1_ruxcq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_5udsk")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.801911, 0.597443, 0, -0.597443, 0.801911, 0, 1.94279, 3.35376)
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 1.94279, 3.35376)
+shadow_enabled = true
+directional_shadow_split_1 = 0.049
+directional_shadow_split_2 = 0.382
+directional_shadow_split_3 = 0.652
+directional_shadow_blend_splits = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 1, 4, 5)
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866026, 0, -0.866026, 0.5, 1, 4, 5)
 projection = 1
 size = 13.0
 
 [node name="Level" parent="." instance=ExtResource("2_so5rb")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.620264, 0)
+mesh = SubResource("PlaneMesh_l3sr3")
