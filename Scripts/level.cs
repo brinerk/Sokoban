@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using static DefinedGlobals;
 
 public partial class level : Node3D
@@ -32,6 +33,7 @@ public partial class level : Node3D
 							var Goal = ResourceLoader.Load<PackedScene>("res://Scenes/goal.tscn").Instantiate<Node3D>();
 							AddChild(Goal);
 							Goal.Position = new Vector3(j,0,i);
+							GoalCoords.Add(new (j,i));
 							break;
 						}
 				}
@@ -59,6 +61,7 @@ public partial class level : Node3D
 						BoxInstance.Position = new Vector3(j,0.25f,i);
 						BoxInstance.ID = 2;
 						AddChild(BoxInstance);
+						Boxes.Add(BoxInstance);
 						break;
 					}
 					case 3:
@@ -67,6 +70,7 @@ public partial class level : Node3D
 						BoxInstance.Position = new Vector3(j,0.25f,i);
 						BoxInstance.ID = 3;
 						AddChild(BoxInstance);
+						Boxes.Add(BoxInstance);
 						break;
 					}
 				}

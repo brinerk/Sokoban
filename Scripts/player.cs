@@ -71,13 +71,35 @@ public partial class player : Node3D
 		}
 
 		Move(NewPos, _t);
+		CheckWin();
+	}
+
+	void CheckWin()
+	{
+		//to improve, make a class with coords and active flag
+		//change active to false 
+
+		foreach (var coord in GoalCoords)
+		{
+			if(EntitiesGen[coord.Y,coord.X] > 1)
+			{
+				//GoalCoords.Remove(coord);
+				GoalNum+=1;
+			}
+			if(GoalNum == Boxes.Count)
+			{
+				GD.Print("YOU WIN");
+			}
+		}
+		GoalNum = 0;
+		//GD.Print(Boxes.Count, ", ", GoalNum);
 	}
 
 	void Restart() 
 	{
 		for(int row = 0; row < Entities.GetLength(0); row++)
 		{
-			for(int col = 0; col < Entities.GetLength(1); col ++)
+			for(int col = 0; col < Entities.GetLength(1); col++)
 			{
 				EntitiesGen[row,col] = Entities[row,col];
 			}
@@ -107,7 +129,6 @@ public partial class player : Node3D
 					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X]=0;
 					//make new pos 1
 					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
-					GD.Print(EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X]);
 					break;
 				}
 				case 1:
@@ -117,17 +138,12 @@ public partial class player : Node3D
 				case 2:
 				{
 
-					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 1 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
+					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
 					{
 						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
 
 						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
 						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 2;
-
-						if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 2)
-						{
-							GD.Print("you win");
-						}
 
 						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
 
@@ -140,17 +156,12 @@ public partial class player : Node3D
 				}
 				case 3:
 				{
-					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 1 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
+					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
 					{
 						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
 
 						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
 						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 3;
-
-						if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 3)
-						{
-							GD.Print("you win");
-						}
 
 						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
 					}
