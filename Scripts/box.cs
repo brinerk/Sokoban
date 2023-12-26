@@ -27,6 +27,7 @@ public partial class box: Node3D
 			{
 				if (EntitiesGen[i,j] == ID)
 				{
+					//TODO write current pos to array
 					NewPos = new Vector3(j,0.25f,i);
 				}
 			}

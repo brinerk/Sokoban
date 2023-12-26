@@ -33,6 +33,7 @@ public partial class player : Node3D
 		if (Input.IsActionJustPressed("left")) 
 		{
 			CheckMovement(Left);
+			//Add opposite dir to array
 		}
 
 		if (Input.IsActionJustPressed("right")) 
@@ -47,8 +48,40 @@ public partial class player : Node3D
 		{
 			CheckMovement(Up);
 		}
+		if (Input.IsActionJustPressed("restart"))
+		{
+			Restart();
+		}
+
+		for(int i = 0; i < EntitiesGen.GetLength(0); i++)
+		{
+			for(int j = 0; j < EntitiesGen.GetLength(1); j++)
+			{
+				if(EntitiesGen[i,j] == 1)
+				{
+					NewPos = new Vector3(j,0.5f,i);
+				}
+			}
+		}
+
+		if(ActualPosition != NewPos)
+		{
+			_t = 0.0f;
+			ActualPosition = NewPos;
+		}
 
 		Move(NewPos, _t);
+	}
+
+	void Restart() 
+	{
+		for(int row = 0; row < Entities.GetLength(0); row++)
+		{
+			for(int col = 0; col < Entities.GetLength(1); col ++)
+			{
+				EntitiesGen[row,col] = Entities[row,col];
+			}
+		}
 	}
 
 	void CheckMovement(Vector3 dir)
@@ -56,24 +89,25 @@ public partial class player : Node3D
 
 		_t = 0.0f;
 		Vector3 PotentialGridPos = ActualPosition + dir;
+		var CheckEnt = EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X];
+		var CurrentGrid = EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X];
 
 		if(LevelOne[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] == 0)
 		{
-			ActualPosition = ActualPosition;
+			CurrentGrid = 1;
+			CheckEnt = 0;
 		}
 		else
 		{
-			var CheckEnt = EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X];
 			switch(CheckEnt)
 			{
 				case 0:
 				{
-					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
-
-					NewPos = ActualPosition + dir;
-					ActualPosition = ActualPosition + dir;
-
-					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 1;
+					//make previous pos 0
+					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X]=0;
+					//make new pos 1
+					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+					GD.Print(EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X]);
 					break;
 				}
 				case 1:
@@ -95,10 +129,8 @@ public partial class player : Node3D
 							GD.Print("you win");
 						}
 
-						NewPos = ActualPosition + dir;
-						ActualPosition = ActualPosition + dir;
+						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
 
-						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 1;
 					}
 					else
 					{
@@ -120,10 +152,7 @@ public partial class player : Node3D
 							GD.Print("you win");
 						}
 
-						NewPos = ActualPosition + dir;
-						ActualPosition = ActualPosition + dir;
-
-						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 1;
+						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
 					}
 					else
 					{
@@ -139,16 +168,7 @@ public partial class player : Node3D
 	void Move(Vector3 NewPos, float _t)
 	{
 
-			/*Useless now
-			if(Position != NewPos) 
-			{
-				Moving = true;
-			}
-			else
-			{
-				Moving = false;
-			}*/
 
-			Position = Position.Lerp(NewPos, _t);
+		Position = Position.Lerp(NewPos, _t);
 	}
 }

@@ -15,6 +15,14 @@ public static class DefinedGlobals
 								     {0,1,1,1,0,1,0},
 								     {1,0,0,1,1,1,0} };
 
+	public static readonly int[,] Entities = { {0,0,0,0,0,0,0},
+					    		     	 {0,0,0,0,0,0,0},
+								  	 	 {0,0,0,0,0,3,0},
+								     	 {0,0,1,0,0,0,0},
+								     	 {0,0,0,2,0,0,0},
+								     	 {0,0,0,0,0,0,0},
+								     	 {0,0,0,0,0,0,0} };
+
 	public static int[,] EntitiesGen = { {0,0,0,0,0,0,0},
 					    		     	 {0,0,0,0,0,0,0},
 								  	 	 {0,0,0,0,0,3,0},
@@ -22,6 +30,7 @@ public static class DefinedGlobals
 								     	 {0,0,0,2,0,0,0},
 								     	 {0,0,0,0,0,0,0},
 								     	 {0,0,0,0,0,0,0} };
+
 }
 
 public partial class globals : Node3D
