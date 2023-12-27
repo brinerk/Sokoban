@@ -121,56 +121,34 @@ public partial class player : Node3D
 		}
 		else
 		{
-			switch(CheckEnt)
+			if(CheckEnt == 0)
 			{
-				case 0:
+				//make previous pos 0
+				EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X]=0;
+				//make new pos 1
+				EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
+			}
+			else if(CheckEnt == 1)
+			{
+				;
+			}
+			else if(CheckEnt > 1)
+			{
+				if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
 				{
-					//make previous pos 0
-					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X]=0;
-					//make new pos 1
+					EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
+
+					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
+					EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = CheckEnt;
+
 					EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
-					break;
+
 				}
-				case 1:
+				else
 				{
-					break;
+					ActualPosition = ActualPosition;
 				}
-				case 2:
-				{
 
-					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
-					{
-						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
-
-						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
-						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 2;
-
-						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
-
-					}
-					else
-					{
-						ActualPosition = ActualPosition;
-					}
-					break;
-				}
-				case 3:
-				{
-					if(LevelOne[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] != 0 && EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] == 0)
-					{
-						EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X] = 0;
-
-						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 0;
-						EntitiesGen[(int)PotentialGridPos.Z+(int)dir.Z,(int)PotentialGridPos.X+(int)dir.X] = 3;
-
-						EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] = 1;
-					}
-					else
-					{
-						ActualPosition = ActualPosition;
-					}
-					break;
-				}
 			}
 		}
 	}

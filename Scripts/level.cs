@@ -13,6 +13,8 @@ public partial class level : Node3D
 
 		string[] lines = File.ReadAllLines("./Maps/map");
 
+
+		//SET TILES
 		for(int i = 0; i<lines.GetLength(0); i++)
 		{
 			string[] entries = lines[i].Split(',');
@@ -22,22 +24,39 @@ public partial class level : Node3D
 				break;
 			}
 			else {
-				LevelOne[Int32.Parse(entries[0]),Int32.Parse(entries[1])] = Int32.Parse(entries[2]);
+				LevelOne[Int32.Parse(entries[1]),Int32.Parse(entries[0])] = Int32.Parse(entries[2]);
 			}
 		}
 
+
+		//SET ENTITIES
 		for(int j = z+1; j<lines.GetLength(0);j++)
 		{
 			string[] entries = lines[j].Split(',');
-			Entities[Int32.Parse(entries[0]),Int32.Parse(entries[1])] = Int32.Parse(entries[2]);
+
+			//IF PLAYER
+			if(Int32.Parse(entries[2]) == 1) 
+			{
+				//SET IMMUTABLE ENTITIES
+				Entities[Int32.Parse(entries[1]),Int32.Parse(entries[0])] = Int32.Parse(entries[2]);
+			}
+			else 
+			{
+				//SET IMMUTABLE ENTITIES
+				Entities[Int32.Parse(entries[1]),Int32.Parse(entries[0])] = Int32.Parse(entries[2]);
+			}
 		}
+
 
 		for(int p = 0; p<Entities.GetLength(0);p++){
 			for(int x = 0; x<Entities.GetLength(0);x++){
-				EntitiesGen[x,p] = Entities[p,x];
+
+				EntitiesGen[x,p] = Entities[x,p];
 			}
 		}
+
 		return 0;
+
 	}
 
 
@@ -82,34 +101,19 @@ public partial class level : Node3D
 		{
 			for (int j = 0; j < EntitiesGen.GetLength(1); j++)
 			{
-				int s = EntitiesGen[i, j];
-				switch(s)
+				if(EntitiesGen[i,j] == 1)
 				{
-					case 1:
-					{
-						var player = ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate<Node3D>();
-						player.Position = new Vector3(j,0.5f,i);
-						AddChild(player);
-						break;
-					}
-					case 2:
-					{
-						var BoxInstance = Box.Instantiate<box>();
-						BoxInstance.Position = new Vector3(j,0.25f,i);
-						BoxInstance.ID = 2;
-						AddChild(BoxInstance);
-						Boxes.Add(BoxInstance);
-						break;
-					}
-					case 3:
-					{
-						var BoxInstance = Box.Instantiate<box>();
-						BoxInstance.Position = new Vector3(j,0.25f,i);
-						BoxInstance.ID = 3;
-						AddChild(BoxInstance);
-						Boxes.Add(BoxInstance);
-						break;
-					}
+					var player = ResourceLoader.Load<PackedScene>("res://Scenes/player.tscn").Instantiate<Node3D>();
+					player.Position = new Vector3(j,0.5f,i);
+					AddChild(player);
+				}
+				else if(EntitiesGen[i,j] != 0)
+				{
+					var BoxInstance = Box.Instantiate<box>();
+					BoxInstance.Position = new Vector3(j,0.25f,i);
+					BoxInstance.ID = Entities[i,j];
+					AddChild(BoxInstance);
+					Boxes.Add(BoxInstance);
 				}
 			}
 		}

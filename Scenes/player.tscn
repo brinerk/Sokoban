@@ -16,3 +16,7 @@ script = ExtResource("1_tp6nj")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_a7kk2")
 surface_material_override/0 = SubResource("StandardMaterial3D_256du")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8, 5)
+current = true

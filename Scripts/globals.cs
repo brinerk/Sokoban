@@ -12,6 +12,8 @@ public static class DefinedGlobals
 	public static List<box> Boxes = new List<box>{};
 
 	public static int GoalNum = 0;
+
+	public static int EntMax = 0;
 	
 	//Define level
 	// 0 is empty. 1 is floor. 2 is goal.
