@@ -1,16 +1,53 @@
 using Godot;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using static DefinedGlobals;
 
 public partial class level : Node3D
 {
+
+	public static int MapReader()
+	{
+		int z = 0;
+
+		string[] lines = File.ReadAllLines("./Maps/map");
+
+		for(int i = 0; i<lines.GetLength(0); i++)
+		{
+			string[] entries = lines[i].Split(',');
+			if(entries[0] == "ENTITIES")
+			{
+				z = i;
+				break;
+			}
+			else {
+				LevelOne[Int32.Parse(entries[0]),Int32.Parse(entries[1])] = Int32.Parse(entries[2]);
+			}
+		}
+
+		for(int j = z+1; j<lines.GetLength(0);j++)
+		{
+			string[] entries = lines[j].Split(',');
+			Entities[Int32.Parse(entries[0]),Int32.Parse(entries[1])] = Int32.Parse(entries[2]);
+		}
+
+		for(int p = 0; p<Entities.GetLength(0);p++){
+			for(int x = 0; x<Entities.GetLength(0);x++){
+				EntitiesGen[x,p] = Entities[p,x];
+			}
+		}
+		return 0;
+	}
+
+
 	private PackedScene Box = ResourceLoader.Load<PackedScene>("res://Scenes/box.tscn");
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 
+		MapReader();
 		// LEVEL GENERATION
 		// THIS SHOULD BE A FUNCTION
 		// i is COLUMN, j is ROW
