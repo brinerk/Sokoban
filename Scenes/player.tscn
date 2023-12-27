@@ -17,6 +17,8 @@ script = ExtResource("1_tp6nj")
 mesh = SubResource("SphereMesh_a7kk2")
 surface_material_override/0 = SubResource("StandardMaterial3D_256du")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8, 5)
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866026, 0, -0.866026, 0.5, 0, 5, 3)
+projection = 1
 current = true
+size = 13.0
