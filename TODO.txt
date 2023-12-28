@@ -1,4 +1,7 @@
 
-Water
+Have a box that swaps location with player when you move into it.
+Have multiple copies of the player and fuse them.
+
+Water https://www.cadhatch.com/seamless-water-textures
  - Add sparkle
 
