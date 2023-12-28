@@ -9,9 +9,11 @@ public partial class player : Node3D
 {
 
 	private Queue MoveQueue = new Queue();
+	private Stack GameState = new Stack();
 
 	private float _t = 0.0f;
 	private float MoveTimer = 0.0f;
+	private float MoveCoolDown = 0.0f;
 	private Vector3 NewPos;
 	private Vector3 ActualPosition;
 	private Vector3 Left;
@@ -24,6 +26,8 @@ public partial class player : Node3D
 	{	
 		NewPos = Position;
 		ActualPosition = Position;
+		GameState.Push(Entities);
+
 		Left = new Vector3(-1,0,0);
 		Right = new Vector3(1,0,0);
 		Up = new Vector3(0,0,-1);
@@ -34,35 +38,105 @@ public partial class player : Node3D
 	public override void _Process(double delta)
 	{
 
+	
+		//REALTIME VARIABLES
 		_t += (float)delta * 2.0f;
 		MoveTimer += (float)delta * 2.0f;
 
-		if (Input.IsActionJustPressed("left")) 
+
+
+
+		//LEFT
+		if (Input.IsActionPressed("left")) 
 		{
-			MoveQueue.Enqueue(Left);
-			//CheckMovement(Left);
+			MoveCoolDown -= (float)delta;
+
+			if(MoveCoolDown <= 0)
+			{
+				MoveQueue.Enqueue(Left);
+				MoveCoolDown = 0.5f;
+			}
 			//Add opposite dir to undo array
 		}
 
-		if (Input.IsActionJustPressed("right")) 
+		if (Input.IsActionJustReleased("left"))
 		{
-			MoveQueue.Enqueue(Right);
-			//CheckMovement(Right);
+			MoveCoolDown = 0.0f;
 		}
-		if (Input.IsActionJustPressed("down")) 
+
+
+
+
+		//RIGHT
+		if (Input.IsActionPressed("right")) 
 		{
-			MoveQueue.Enqueue(Down);
-			//CheckMovement(Down);
+			MoveCoolDown -= (float)delta;
+
+			if(MoveCoolDown <= 0)
+			{
+				MoveQueue.Enqueue(Right);
+				MoveCoolDown = 0.5f;
+			}
+			//Add opposite dir to undo array
 		}
-		if (Input.IsActionJustPressed("up")) 
+		if (Input.IsActionJustReleased("right"))
 		{
-			MoveQueue.Enqueue(Up);
-			//CheckMovement(Up);
+			MoveCoolDown = 0.0f;
 		}
+
+
+		//UP
+		if (Input.IsActionPressed("up")) 
+		{
+			MoveCoolDown -= (float)delta;
+
+			if(MoveCoolDown <= 0)
+			{
+				MoveQueue.Enqueue(Up);
+				MoveCoolDown = 0.5f;
+			}
+			//Add opposite dir to undo array
+		}
+		if (Input.IsActionJustReleased("up"))
+		{
+			MoveCoolDown = 0.0f;
+		}
+
+
+
+		//DOWN
+		if (Input.IsActionPressed("down")) 
+		{
+			MoveCoolDown -= (float)delta;
+
+			if(MoveCoolDown <= 0)
+			{
+				MoveQueue.Enqueue(Down);
+				MoveCoolDown = 0.5f;
+			}
+			//Add opposite dir to undo array
+		}
+		if (Input.IsActionJustReleased("down"))
+		{
+			MoveCoolDown = 0.0f;
+		}
+
+
+
+		//RESTART
 		if (Input.IsActionJustPressed("restart"))
 		{
 			Restart();
 		}
+
+
+		//UNDO
+		if (Input.IsActionJustPressed("undo") && GameState.Count > 1)
+		{
+			Undo();
+		}
+
+		
 
 		//Handle moves in buffer
 		List<Vector3> MoveList = new List<Vector3>(MoveQueue.Cast<Vector3>().ToList());
@@ -120,8 +194,11 @@ public partial class player : Node3D
 		//GD.Print(Boxes.Count, ", ", GoalNum);
 	}
 
+
 	void Restart() 
 	{
+
+		GameState.Push(EntitiesGen.Clone());
 		for(int row = 0; row < Entities.GetLength(0); row++)
 		{
 			for(int col = 0; col < Entities.GetLength(1); col++)
@@ -131,8 +208,23 @@ public partial class player : Node3D
 		}
 	}
 
+
+	void Undo()
+	{
+		int[,] PreviousGameState = (int[,])GameState.Pop();
+		for(int x = 0; x < PreviousGameState.GetLength(0); x++)
+		{
+			for(int y = 0; y < PreviousGameState.GetLength(1); y++)
+			{
+				EntitiesGen[x,y] = PreviousGameState[x,y];
+			}
+		}
+	}
+
 	void CheckMovement(Vector3 dir)
 	{
+
+		GameState.Push(EntitiesGen.Clone());
 
 		_t = 0.0f;
 
@@ -185,6 +277,8 @@ public partial class player : Node3D
 
 		MoveTimer = 0.0f;
 		MoveQueue.Dequeue();
+
+		//This means that we cannot have objects that move on their own, for undoing
 	}
 
 
