@@ -46,7 +46,7 @@ void fragment() {
 	
 	
 	// NORMAL_MAP = texture(texture_normal,base_uv).rgb;
-	NORMAL_MAP = texture(texture_normal,vec2(base_uv.x + TIME * .03, base_uv.y + TIME * .02)).rgb * texture(texture_normal,vec2(base_uv.x + TIME * -.04, base_uv.y + TIME * -.01)).rgb;
+	NORMAL_MAP = 1.2*texture(texture_normal,vec2(base_uv.x + TIME * .03, base_uv.y + TIME * .02)).rgb * .8*texture(texture_normal,vec2(base_uv.x + TIME * -.04, base_uv.y + TIME * -.01)).rgb;
 	
 	NORMAL_MAP_DEPTH = normal_scale;
 }
