@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/globals.cs" id="1_ruxcq"]
 [ext_resource type="PackedScene" uid="uid://8upexyc62g7k" path="res://Scenes/level.tscn" id="2_so5rb"]
+[ext_resource type="Material" uid="uid://dlcqkb01krmn6" path="res://Textures/shader.tres" id="3_4mv1f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n8iqy"]
 sky_top_color = Color(0.172549, 0.435294, 0.819608, 1)
@@ -16,11 +17,8 @@ sky_material = SubResource("ProceduralSkyMaterial_n8iqy")
 background_mode = 2
 sky = SubResource("Sky_eqgpb")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2r8c"]
-albedo_color = Color(0.286275, 0.643137, 1, 1)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_l3sr3"]
-material = SubResource("StandardMaterial3D_i2r8c")
+material = ExtResource("3_4mv1f")
 size = Vector2(100, 100)
 
 [node name="Main" type="Node3D"]
@@ -44,6 +42,6 @@ size = 13.0
 
 [node name="Level" parent="." instance=ExtResource("2_so5rb")]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Water" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.620264, 0)
 mesh = SubResource("PlaneMesh_l3sr3")
