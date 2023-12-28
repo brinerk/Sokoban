@@ -1,11 +1,17 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using static DefinedGlobals;
 
 public partial class player : Node3D
 {
 
+	private Queue MoveQueue = new Queue();
+
 	private float _t = 0.0f;
+	private float MoveTimer = 0.0f;
 	private Vector3 NewPos;
 	private Vector3 ActualPosition;
 	private Vector3 Left;
@@ -29,30 +35,46 @@ public partial class player : Node3D
 	{
 
 		_t += (float)delta * 2.0f;
+		MoveTimer += (float)delta * 2.0f;
 
 		if (Input.IsActionJustPressed("left")) 
 		{
-			CheckMovement(Left);
-			//Add opposite dir to array
+			MoveQueue.Enqueue(Left);
+			//CheckMovement(Left);
+			//Add opposite dir to undo array
 		}
 
 		if (Input.IsActionJustPressed("right")) 
 		{
-			CheckMovement(Right);
+			MoveQueue.Enqueue(Right);
+			//CheckMovement(Right);
 		}
 		if (Input.IsActionJustPressed("down")) 
 		{
-			CheckMovement(Down);
+			MoveQueue.Enqueue(Down);
+			//CheckMovement(Down);
 		}
 		if (Input.IsActionJustPressed("up")) 
 		{
-			CheckMovement(Up);
+			MoveQueue.Enqueue(Up);
+			//CheckMovement(Up);
 		}
 		if (Input.IsActionJustPressed("restart"))
 		{
 			Restart();
 		}
 
+		//Handle moves in buffer
+		List<Vector3> MoveList = new List<Vector3>(MoveQueue.Cast<Vector3>().ToList());
+		foreach (Vector3 move in MoveList)
+		{
+			if(MoveTimer > 0.1f) 
+			{
+				CheckMovement(move);
+			}
+		}
+
+		//SPAWN PLAYER
 		for(int i = 0; i < EntitiesGen.GetLength(0); i++)
 		{
 			for(int j = 0; j < EntitiesGen.GetLength(1); j++)
@@ -64,13 +86,16 @@ public partial class player : Node3D
 			}
 		}
 
+		//Setup Lerp
 		if(ActualPosition != NewPos)
 		{
 			_t = 0.0f;
 			ActualPosition = NewPos;
 		}
 
+		//Move and Lerp
 		Move(NewPos, _t);
+		
 		CheckWin();
 	}
 
@@ -110,12 +135,18 @@ public partial class player : Node3D
 	{
 
 		_t = 0.0f;
+
+		//One tile away from player in direction of motion
 		Vector3 PotentialGridPos = ActualPosition + dir;
+
+		//Entites at player location and one tile away
 		var CheckEnt = EntitiesGen[(int)PotentialGridPos.Z,(int)PotentialGridPos.X];
 		var CurrentGrid = EntitiesGen[(int)ActualPosition.Z,(int)ActualPosition.X];
 
+		//Check if there is a floor tile to move to
 		if(LevelOne[(int)PotentialGridPos.Z,(int)PotentialGridPos.X] == 0)
 		{
+			//No motion
 			CurrentGrid = 1;
 			CheckEnt = 0;
 		}
@@ -151,13 +182,14 @@ public partial class player : Node3D
 
 			}
 		}
+
+		MoveTimer = 0.0f;
+		MoveQueue.Dequeue();
 	}
 
 
 	void Move(Vector3 NewPos, float _t)
 	{
-
-
 		Position = Position.Lerp(NewPos, _t);
 	}
 }
