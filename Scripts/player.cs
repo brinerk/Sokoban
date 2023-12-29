@@ -189,10 +189,13 @@ public partial class player : Node3D
 			}
 			if(GoalNum == Boxes.Count)
 			{
+
+
 				level CurrentLevel = (level)GetNode("/root/Level");
 				GlobalLevelID = CurrentLevel.LevelID;
 				GlobalLevelID += 1;
 				GetNode("/root/Level").QueueFree();
+
 
 				Array.Clear(LevelOne, 0, LevelOne.Length);
 				Array.Clear(Entities, 0, Entities.Length);

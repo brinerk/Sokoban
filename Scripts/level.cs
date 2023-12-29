@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using static DefinedGlobals;
@@ -11,6 +12,10 @@ public partial class level : Node3D
 
 	public int MapReader()
 	{
+
+		MapFiles = MapFiles.OrderBy( f => Path.GetFileName(f)).ToArray();
+
+
 		int z = 0;
 
 		string[] lines = File.ReadAllLines(MapFiles[LevelID]);
