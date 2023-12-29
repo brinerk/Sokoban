@@ -7,11 +7,13 @@ using static DefinedGlobals;
 public partial class level : Node3D
 {
 
-	public static int MapReader()
+	public int LevelID {get; set;}
+
+	public int MapReader()
 	{
 		int z = 0;
 
-		string[] lines = File.ReadAllLines("./Maps/map");
+		string[] lines = File.ReadAllLines(MapFiles[LevelID]);
 
 
 		//SET TILES

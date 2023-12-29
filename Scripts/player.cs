@@ -21,6 +21,8 @@ public partial class player : Node3D
 	private Vector3 Down;
 	private Vector3 Up;
 
+	private PackedScene LevelScene = ResourceLoader.Load<PackedScene>("res://Scenes/level.tscn");
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
@@ -187,7 +189,20 @@ public partial class player : Node3D
 			}
 			if(GoalNum == Boxes.Count)
 			{
-				GD.Print("YOU WIN");
+				level CurrentLevel = (level)GetNode("/root/Level");
+				GlobalLevelID = CurrentLevel.LevelID;
+				GlobalLevelID += 1;
+				GetNode("/root/Level").QueueFree();
+
+				Array.Clear(LevelOne, 0, LevelOne.Length);
+				Array.Clear(Entities, 0, Entities.Length);
+				Array.Clear(EntitiesGen, 0, EntitiesGen.Length);
+
+
+				var LevelSceneInstance = LevelScene.Instantiate<level>();
+				LevelSceneInstance.LevelID = GlobalLevelID;
+				GetTree().Root.AddChild(LevelSceneInstance);
+
 			}
 		}
 		GoalNum = 0;

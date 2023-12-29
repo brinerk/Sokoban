@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public static class DefinedGlobals
 {
+
+	public static string[] MapFiles = Directory.GetFiles("./Maps/");
+
 	public const string TestString = "test";
 
 	public static List<(int X, int Y)> GoalCoords = new List<(int X, int Y)>{};
@@ -14,6 +17,8 @@ public static class DefinedGlobals
 	public static int GoalNum = 0;
 
 	public static int EntMax = 0;
+
+	public static int GlobalLevelID = 0;
 	
 	//Define level
 	// 0 is empty. 1 is floor. 2 is goal.
