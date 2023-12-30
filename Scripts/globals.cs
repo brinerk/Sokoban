@@ -17,6 +17,8 @@ public static class DefinedGlobals
 	public static int EntMax = 0;
 
 	public static int GlobalLevelID = 0;
+
+	public static bool BlockInput = false;
 	
 	//Define level
 	// 0 is empty. 1 is floor. 2 is goal.

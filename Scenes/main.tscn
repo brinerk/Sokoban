@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bxiwerq47hatg"]
+[gd_scene load_steps=9 format=3 uid="uid://bxiwerq47hatg"]
 
 [ext_resource type="Script" path="res://Scripts/globals.cs" id="1_ruxcq"]
 [ext_resource type="PackedScene" uid="uid://d2wrvyde7q50g" path="res://Scenes/water.tscn" id="3_u2m38"]
 [ext_resource type="PackedScene" uid="uid://cq3yyoj2wea" path="res://Scenes/mainmenu.tscn" id="4_4i7mb"]
 [ext_resource type="Script" path="res://Scripts/GameManager.cs" id="4_qh2n4"]
+[ext_resource type="PackedScene" uid="uid://clw6y0c4lv4ug" path="res://Scenes/level_win_screen.tscn" id="5_vhpna"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_n8iqy"]
 sky_top_color = Color(0.172549, 0.435294, 0.819608, 1)
@@ -43,3 +44,6 @@ size = 13.0
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("4_qh2n4")
+
+[node name="level_win_screen" parent="." instance=ExtResource("5_vhpna")]
+visible = false

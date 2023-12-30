@@ -7,10 +7,13 @@ using static DefinedGlobals;
 public partial class GameManager : Node3D
 {
 
+	private level_win_screen WinScreen;
+
 	private PackedScene LevelScene = ResourceLoader.Load<PackedScene>("res://Scenes/level.tscn");
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		WinScreen = GetNode<level_win_screen>("/root/Main/level_win_screen");
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,8 +24,8 @@ public partial class GameManager : Node3D
 	public void UpdateLevel()
 	{
 		level CurrentLevel = (level)GetNode("/root/Level");
-		GlobalLevelID = CurrentLevel.LevelID;
-		GlobalLevelID += 1;
+		//GlobalLevelID = CurrentLevel.LevelID;
+		//GlobalLevelID += 1;
 		CurrentLevel.Name = "Delete";
 		GetNode("/root/Delete").QueueFree();
 	}
@@ -44,6 +47,7 @@ public partial class GameManager : Node3D
 		LevelSceneInstance.Name = "Level";
 	}
 
+
 	public void CheckWin()
 	{
 
@@ -63,9 +67,8 @@ public partial class GameManager : Node3D
 			}
 			if(GoalNum == Boxes.Count)
 			{
-				UpdateLevel();
-				ClearArrays();
-				InstantiateLevel();
+				WinScreen.Visible = true;
+				BlockInput = true;
 			}
 		}
 	}

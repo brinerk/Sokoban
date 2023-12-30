@@ -53,94 +53,97 @@ public partial class player : Node3D
 
 
 
+		if(!BlockInput)
+		{
 		//LEFT
-		if (Input.IsActionPressed("left")) 
-		{
-			MoveCoolDown -= (float)delta;
-
-			if(MoveCoolDown <= 0)
+			if (Input.IsActionPressed("left")) 
 			{
-				MoveQueue.Enqueue(Left);
-				MoveCoolDown = 0.5f;
+				MoveCoolDown -= (float)delta;
+
+				if(MoveCoolDown <= 0)
+				{
+					MoveQueue.Enqueue(Left);
+					MoveCoolDown = 0.5f;
+				}
+				//Add opposite dir to undo array
 			}
-			//Add opposite dir to undo array
-		}
 
-		if (Input.IsActionJustReleased("left"))
-		{
-			MoveCoolDown = 0.0f;
-		}
-
-
-
-
-		//RIGHT
-		if (Input.IsActionPressed("right")) 
-		{
-			MoveCoolDown -= (float)delta;
-
-			if(MoveCoolDown <= 0)
+			if (Input.IsActionJustReleased("left"))
 			{
-				MoveQueue.Enqueue(Right);
-				MoveCoolDown = 0.5f;
+				MoveCoolDown = 0.0f;
 			}
-			//Add opposite dir to undo array
-		}
-		if (Input.IsActionJustReleased("right"))
-		{
-			MoveCoolDown = 0.0f;
-		}
 
 
-		//UP
-		if (Input.IsActionPressed("up")) 
-		{
-			MoveCoolDown -= (float)delta;
 
-			if(MoveCoolDown <= 0)
+
+			//RIGHT
+			if (Input.IsActionPressed("right")) 
 			{
-				MoveQueue.Enqueue(Up);
-				MoveCoolDown = 0.5f;
+				MoveCoolDown -= (float)delta;
+
+				if(MoveCoolDown <= 0)
+				{
+					MoveQueue.Enqueue(Right);
+					MoveCoolDown = 0.5f;
+				}
+				//Add opposite dir to undo array
 			}
-			//Add opposite dir to undo array
-		}
-		if (Input.IsActionJustReleased("up"))
-		{
-			MoveCoolDown = 0.0f;
-		}
-
-
-
-		//DOWN
-		if (Input.IsActionPressed("down")) 
-		{
-			MoveCoolDown -= (float)delta;
-
-			if(MoveCoolDown <= 0)
+			if (Input.IsActionJustReleased("right"))
 			{
-				MoveQueue.Enqueue(Down);
-				MoveCoolDown = 0.5f;
+				MoveCoolDown = 0.0f;
 			}
-			//Add opposite dir to undo array
-		}
-		if (Input.IsActionJustReleased("down"))
-		{
-			MoveCoolDown = 0.0f;
-		}
+
+
+			//UP
+			if (Input.IsActionPressed("up")) 
+			{
+				MoveCoolDown -= (float)delta;
+
+				if(MoveCoolDown <= 0)
+				{
+					MoveQueue.Enqueue(Up);
+					MoveCoolDown = 0.5f;
+				}
+				//Add opposite dir to undo array
+			}
+			if (Input.IsActionJustReleased("up"))
+			{
+				MoveCoolDown = 0.0f;
+			}
 
 
 
-		//RESTART
-		if (Input.IsActionJustPressed("restart"))
-		{
-			Restart();
-		}
+			//DOWN
+			if (Input.IsActionPressed("down")) 
+			{
+				MoveCoolDown -= (float)delta;
+
+				if(MoveCoolDown <= 0)
+				{
+					MoveQueue.Enqueue(Down);
+					MoveCoolDown = 0.5f;
+				}
+				//Add opposite dir to undo array
+			}
+			if (Input.IsActionJustReleased("down"))
+			{
+				MoveCoolDown = 0.0f;
+			}
 
 
-		//UNDO
-		if (Input.IsActionJustPressed("undo") && GameState.Count > 1)
-		{
-			Undo();
+
+			//RESTART
+			if (Input.IsActionJustPressed("restart"))
+			{
+				Restart();
+			}
+
+
+			//UNDO
+			if (Input.IsActionJustPressed("undo") && GameState.Count > 1)
+			{
+				Undo();
+			}
 		}
 
 		
