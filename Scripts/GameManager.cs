@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using static DefinedGlobals;
 
 public partial class GameManager : Node3D
@@ -21,7 +23,8 @@ public partial class GameManager : Node3D
 		level CurrentLevel = (level)GetNode("/root/Level");
 		GlobalLevelID = CurrentLevel.LevelID;
 		GlobalLevelID += 1;
-		GetNode("/root/Level").Free();
+		CurrentLevel.Name = "Delete";
+		GetNode("/root/Delete").QueueFree();
 	}
 
 	public void ClearArrays()
@@ -39,6 +42,32 @@ public partial class GameManager : Node3D
 		LevelSceneInstance.LevelID = GlobalLevelID;
 		GetTree().Root.AddChild(LevelSceneInstance);
 		LevelSceneInstance.Name = "Level";
+	}
+
+	public void CheckWin()
+	{
+
+		int GoalNum = 0;
+
+		//to improve, make a class with coords and active flag
+		//change active to false
+
+		List<(int X, int Y)> GoalCoordsCopy = new List<(int X, int Y)>(GoalCoords);
+
+
+		foreach (var coord in GoalCoordsCopy)
+		{
+			if(EntitiesGen[coord.Y,coord.X] > 1)
+			{
+				GoalNum+=1;
+			}
+			if(GoalNum == Boxes.Count)
+			{
+				UpdateLevel();
+				ClearArrays();
+				InstantiateLevel();
+			}
+		}
 	}
 
 

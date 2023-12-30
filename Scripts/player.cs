@@ -177,7 +177,7 @@ public partial class player : Node3D
 		//Move and Lerp
 		Move(NewPos, _t);
 		
-		CheckWin();
+		gameManager.CheckWin();
 	}
 
 	private void CleanLevel() 
@@ -187,7 +187,7 @@ public partial class player : Node3D
 		gameManager.InstantiateLevel();
 	}
 
-	void CheckWin()
+	/*void CheckWin()
 	{
 
 		int GoalNum = 0;
@@ -209,7 +209,7 @@ public partial class player : Node3D
 				CleanLevel();
 			}
 		}
-	}
+	}*/
 
 
 	void Restart() 
