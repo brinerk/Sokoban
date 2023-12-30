@@ -14,8 +14,6 @@ public static class DefinedGlobals
 
 	public static List<box> Boxes = new List<box>{};
 
-	public static int GoalNum = 0;
-
 	public static int EntMax = 0;
 
 	public static int GlobalLevelID = 0;
@@ -29,7 +27,6 @@ public static class DefinedGlobals
 	public static int[,] EntitiesGen = new int[64,64];
 
 }
-
 
 public partial class globals : Node3D
 {

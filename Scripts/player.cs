@@ -23,9 +23,13 @@ public partial class player : Node3D
 
 	private PackedScene LevelScene = ResourceLoader.Load<PackedScene>("res://Scenes/level.tscn");
 
+	private GameManager gameManager;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
+
+		gameManager = (GameManager)GetNode("/root/Main/GameManager");
 		NewPos = Position;
 		ActualPosition = Position;
 		GameState.Push(Entities);
@@ -34,6 +38,7 @@ public partial class player : Node3D
 		Right = new Vector3(1,0,0);
 		Up = new Vector3(0,0,-1);
 		Down = new Vector3(0,0,1);
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -175,41 +180,35 @@ public partial class player : Node3D
 		CheckWin();
 	}
 
+	private void CleanLevel() 
+	{
+		gameManager.UpdateLevel();
+		gameManager.ClearArrays();
+		gameManager.InstantiateLevel();
+	}
+
 	void CheckWin()
 	{
+
+		int GoalNum = 0;
+
 		//to improve, make a class with coords and active flag
 		//change active to false 
+		
+		List<(int X, int Y)> GoalCoordsCopy = new List<(int X, int Y)>(GoalCoords);
 
-		foreach (var coord in GoalCoords)
+
+		foreach (var coord in GoalCoordsCopy)
 		{
 			if(EntitiesGen[coord.Y,coord.X] > 1)
 			{
-				//GoalCoords.Remove(coord);
 				GoalNum+=1;
 			}
 			if(GoalNum == Boxes.Count)
 			{
-
-
-				level CurrentLevel = (level)GetNode("/root/Level");
-				GlobalLevelID = CurrentLevel.LevelID;
-				GlobalLevelID += 1;
-				GetNode("/root/Level").QueueFree();
-
-
-				Array.Clear(LevelOne, 0, LevelOne.Length);
-				Array.Clear(Entities, 0, Entities.Length);
-				Array.Clear(EntitiesGen, 0, EntitiesGen.Length);
-
-
-				var LevelSceneInstance = LevelScene.Instantiate<level>();
-				LevelSceneInstance.LevelID = GlobalLevelID;
-				GetTree().Root.AddChild(LevelSceneInstance);
-
+				CleanLevel();
 			}
 		}
-		GoalNum = 0;
-		//GD.Print(Boxes.Count, ", ", GoalNum);
 	}
 
 

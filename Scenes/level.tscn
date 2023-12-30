@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://Scripts/level.cs" id="1_ocv2l"]
 
-[node name="Level" type="Node3D"]
+[node name="Level" type="Node3D" groups=["levels"]]
 script = ExtResource("1_ocv2l")
