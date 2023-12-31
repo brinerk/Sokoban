@@ -55,6 +55,14 @@ public partial class player : Node3D
 
 		if(!BlockInput)
 		{
+
+
+			Vector2 DirVector = Input.GetVector("left", "right", "up", "down");
+			if(DirVector != Vector2.Zero)
+			{
+				GD.Print(DirVector);
+			}
+
 		//LEFT
 			if (Input.IsActionPressed("left")) 
 			{
