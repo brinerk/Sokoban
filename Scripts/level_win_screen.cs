@@ -33,7 +33,7 @@ public partial class level_win_screen : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(Input.IsActionJustPressed("space"))
+		if(Input.IsActionJustPressed("space") && this.Visible)
 		{
 			ButtonPressed();
 		}

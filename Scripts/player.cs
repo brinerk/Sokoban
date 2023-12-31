@@ -25,6 +25,7 @@ public partial class player : Node3D
 
 	private GameManager gameManager;
 
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{	
@@ -39,106 +40,56 @@ public partial class player : Node3D
 		Up = new Vector3(0,0,-1);
 		Down = new Vector3(0,0,1);
 
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-
 	
 		//REALTIME VARIABLES
 		_t += (float)delta * 2.0f;
 		MoveTimer += (float)delta * 2.0f;
 
-
-
+		Vector3 Dir = Vector3.Zero;
 
 		if(!BlockInput)
 		{
 
+			MoveCoolDown -= (float)delta;
 
-			Vector2 DirVector = Input.GetVector("left", "right", "up", "down");
-			if(DirVector != Vector2.Zero)
+			if(Input.IsActionPressed("up"))
 			{
-				GD.Print(DirVector);
+				Dir.X = 0;
+				Dir.Z = -1;
+			}
+			else if(Input.IsActionPressed("down"))
+			{
+				Dir.X = 0;
+				Dir.Z = 1;
+			}
+			else if(Input.IsActionPressed("left"))
+			{
+				Dir.X = -1;
+				Dir.Z = 0;
+			}
+			else if(Input.IsActionPressed("right"))
+			{
+				Dir.X = 1;
+				Dir.Z = 0;
 			}
 
-		//LEFT
-			if (Input.IsActionPressed("left")) 
-			{
-				MoveCoolDown -= (float)delta;
+			if(MoveCoolDown <= 0 && Dir != Vector3.Zero)
 
-				if(MoveCoolDown <= 0)
-				{
-					MoveQueue.Enqueue(Left);
-					MoveCoolDown = 0.5f;
-				}
-				//Add opposite dir to undo array
+			{
+				MoveQueue.Enqueue(Dir);
+				MoveCoolDown = 0.3f;
 			}
 
-			if (Input.IsActionJustReleased("left"))
+			if(MoveCoolDown < 0)
 			{
-				MoveCoolDown = 0.0f;
+				MoveCoolDown = 0;
 			}
-
-
-
-
-			//RIGHT
-			if (Input.IsActionPressed("right")) 
-			{
-				MoveCoolDown -= (float)delta;
-
-				if(MoveCoolDown <= 0)
-				{
-					MoveQueue.Enqueue(Right);
-					MoveCoolDown = 0.5f;
-				}
-				//Add opposite dir to undo array
-			}
-			if (Input.IsActionJustReleased("right"))
-			{
-				MoveCoolDown = 0.0f;
-			}
-
-
-			//UP
-			if (Input.IsActionPressed("up")) 
-			{
-				MoveCoolDown -= (float)delta;
-
-				if(MoveCoolDown <= 0)
-				{
-					MoveQueue.Enqueue(Up);
-					MoveCoolDown = 0.5f;
-				}
-				//Add opposite dir to undo array
-			}
-			if (Input.IsActionJustReleased("up"))
-			{
-				MoveCoolDown = 0.0f;
-			}
-
-
-
-			//DOWN
-			if (Input.IsActionPressed("down")) 
-			{
-				MoveCoolDown -= (float)delta;
-
-				if(MoveCoolDown <= 0)
-				{
-					MoveQueue.Enqueue(Down);
-					MoveCoolDown = 0.5f;
-				}
-				//Add opposite dir to undo array
-			}
-			if (Input.IsActionJustReleased("down"))
-			{
-				MoveCoolDown = 0.0f;
-			}
-
-
 
 			//RESTART
 			if (Input.IsActionJustPressed("restart"))
