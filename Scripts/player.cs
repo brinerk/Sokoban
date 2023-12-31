@@ -43,6 +43,8 @@ public partial class player : Node3D
 
 	}
 
+	private Vector3 Dir = Vector3.Zero;
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -51,32 +53,44 @@ public partial class player : Node3D
 		_t += (float)delta * 2.0f;
 		MoveTimer += (float)delta * 2.0f;
 
-		Vector3 Dir = Vector3.Zero;
 
 		if(!BlockInput)
 		{
 
 			MoveCoolDown -= (float)delta;
 
-			if(Input.IsActionPressed("up"))
+			if(Input.IsActionJustPressed("up"))
 			{
+				MoveCoolDown = 0;
 				Dir.X = 0;
 				Dir.Z = -1;
 			}
-			else if(Input.IsActionPressed("down"))
+			else if(Input.IsActionJustPressed("down"))
 			{
+				MoveCoolDown = 0;
 				Dir.X = 0;
 				Dir.Z = 1;
 			}
-			else if(Input.IsActionPressed("left"))
+			else if(Input.IsActionJustPressed("left"))
 			{
+				MoveCoolDown = 0;
 				Dir.X = -1;
 				Dir.Z = 0;
 			}
-			else if(Input.IsActionPressed("right"))
+			else if(Input.IsActionJustPressed("right"))
 			{
+				MoveCoolDown = 0;
 				Dir.X = 1;
 				Dir.Z = 0;
+			}
+
+			if((Input.IsActionJustReleased("up") && Dir == Up) 
+					|| (Input.IsActionJustReleased("down") && Dir == Down)
+					|| (Input.IsActionJustReleased("left") && Dir == Left)
+					|| (Input.IsActionJustReleased("right") && Dir == Right))
+			{
+				MoveCoolDown = 0;
+				Dir = Vector3.Zero;
 			}
 
 			if(MoveCoolDown <= 0 && Dir != Vector3.Zero)
